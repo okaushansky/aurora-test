@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'src/main.py'
+                sh 'id; ls -la .; python3 src/main.py'
             }
         }
     }

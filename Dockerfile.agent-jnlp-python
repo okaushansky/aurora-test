@@ -1,0 +1,16 @@
+FROM jenkins/inbound-agent:alpine as jnlp
+
+FROM python:alpine
+
+RUN apk -U add openjdk11-jre git
+
+COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
+COPY --from=jnlp /usr/share/jenkins/agent.jar /usr/share/jenkins/agent.jar
+COPY --from=jnlp /etc/passwd /etc/passwd
+COPY --from=jnlp /etc/group /etc/group
+COPY --from=jnlp /home/ /home/
+
+RUN chown jenkins.jenkins /home/jenkins/
+USER jenkins
+
+ENTRYPOINT ["/usr/local/bin/jenkins-agent"]

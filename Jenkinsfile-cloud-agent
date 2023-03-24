@@ -1,0 +1,10 @@
+pipeline {
+    agent { label "ci-docker-agent" }
+    stages {
+        stage('build') {
+            steps {
+                sh 'id; ls -la .; python3 src/main.py'
+            }
+        }
+    }
+}
